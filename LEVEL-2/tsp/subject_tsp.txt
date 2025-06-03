@@ -56,5 +56,8 @@ $> cat square.txt
 0, 1
 1, 0
 0, 0
++ 
++ +
++
 $> ./tsp < square.txt | cat -e
 4.00$
