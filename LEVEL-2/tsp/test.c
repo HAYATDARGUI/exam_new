@@ -12,13 +12,13 @@ float distance(float a[2], float b[2]) {
 }
 
 // Function to calculate the total distance of a path
-float calculate_path_distance(float (*array)[2], size_t size, int *order) {
-    float total_distance = 0.0f;
-    for (size_t i = 0; i < size - 1; i++) {
-        total_distance += distance(array[order[i]], array[order[i + 1]]);
-    }
-    total_distance += distance(array[order[size - 1]], array[order[0]]); // Return to the starting point
-    return total_distance;
+float calculate_path_distance(float (*array)[2], size_t size, int *order)
+{
+      float total = 0.0f;
+    for (ssize_t i = 0; i < size - 1; i++)
+        total += distance(array[i], array[i + 1]);
+    total += distance(array[size - 1], array[0]); // Return to start
+    return total;
 }
 
 // Function to swap two integers
@@ -45,7 +45,8 @@ void permute_and_find(float (*array)[2], size_t size, int *order, size_t start, 
 }
 
 // Main TSP function
-float tsp(float (*array)[2], ssize_t size) {
+float tsp(float (*array)[2], ssize_t size)
+{
     float shortest_length = __FLT_MAX__;
     int *order = malloc(size * sizeof(int));
     if (!order) {
