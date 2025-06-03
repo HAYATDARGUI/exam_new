@@ -1,92 +1,91 @@
-
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <stdlib.h>
 
 int match_space(FILE *f)
 {
-    char c;
-    while((c=fgetc(f))!=EOF)
-    {
-        if(!isspace(c))
-            return (ungetc(c,f),1);
-    }
-    return -1;
+	int get;
+
+	while (isspace((get = getc(f))));
+	if (get == EOF)
+		return -1;
+	return (ungetc(get, f), 1);
 }
-int match_char(FILE *f, char c)
+int match_char(FILE *f, const char c)
 {
-   return(c=fgetc(f));
+	int get = fgetc(f);
+	if (get == EOF)
+		return -1;
+	if (get == c)
+		return 1;
+	ungetc(get, f);
+	return (0);
 }
 
 int scan_char(FILE *f, va_list ap)
 {
-   char c=fgetc(f);
-   char *s=va_arg(ap,char*);
-
-   if(c==EOF)
-        return 0;
-    *s=c;
-    return 1;
+	char *c = va_arg(ap, char *);
+	char get = fgetc(f);
+	if (get == EOF)
+		return -1;
+	*c = get;
+	return 1;
 }
-long long ft_itol(char *str)
-{
-    long i=0;
-    int s=1;
-    long r=0;
-    while(isspace(str[i]) ||str[i]=='\n' || str[i]=='\t')
-        i++;
-    if(str[i]=='+' ||str[i]=='-')
-    {
-        if(str[i]=='-')
-        {
-            s=-1;
-            i++;
-        }
-        i++;
-    }
-    while(str[i]>='0' && str[i]<='9')
-    {
-        r =r*10+(str[i]-'0');
-        i++;
-    }
-    return (r*s);
-}
-
 
 int scan_int(FILE *f, va_list ap)
 {
-	int c;
-    char buffer[42];
-    int *s=va_arg(ap,int *);
-    int i=0;
-    while((c=fgetc(f))!=EOF && isdigit(c) && i< sizeof(buffer))
-        buffer[i++]=c;
-    if(i>0)
-    {
-        buffer[i]=0;
-        *s=ft_itol(buffer);
-        if(c!=EOF)
-            return 1;
-    }
-    return 0;
+	int *arg = va_arg(ap, int *);
+	int sign = 1;
+	int holder = 0;
+	int get = fgetc(f);
+
+	if (get == EOF)
+		return -1;
+	if (get == '-' || get == '+')
+	{
+		if (get == '-')
+			sign = -1;
+		int getnext = fgetc(f);
+		if (!isdigit(getnext))
+		{
+			ungetc(get, f);
+			if (getnext != EOF)
+				ungetc(getnext, f);
+			return (-1);
+		}
+		get = getnext;
+	}
+	else if (!isdigit(get))
+		return (ungetc(get, f), -1);
+	while (isdigit(get))	
+	{
+		holder = holder * 10 + (get - 48);
+		get = fgetc(f);
+	}
+	*arg = holder * sign;
+	if (get != EOF)
+		ungetc(get, f);
+	return (1);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-	int c;
-    char *s=va_arg(ap,char *);
-    int i=0;
-    while((c=fgetc(f))!=EOF && !isspace(c) && i< 99)
-        s[i++]=c;
-    s[i]=0;
-    if(i>0)
-    {
-        return 1;
-    }
-    return 0;
+	int get = fgetc(f);
+	if (get == EOF)
+		return (-1);
+	char *str = va_arg(ap, char *);
+	int i = 0;
+	while (!isspace(get) && get != EOF)
+	{
+		str[i] = get;
+		get = fgetc(f);
+		i++;
+	}
+	str[i] = '\0';
+	if (get != EOF)
+		ungetc(get, f);
+	return 1;
 }
-
 
 int	match_conv(FILE *f, const char **format, va_list ap)
 {
@@ -137,6 +136,8 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 	}
 	if (ferror(f))
 		return EOF;
+	if (nconv == 0 && feof(f))
+		return -1;
 	return nconv;
 }
 
@@ -144,17 +145,22 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 int ft_scanf(const char *format, ...)
 {
 	va_list ap;
-    va_start(ap,format);
+
+	va_start(ap, format);
 	int ret = ft_vfscanf(stdin, format, ap);
 	va_end(ap);
 	return ret;
 }
+
 int main()
 {
-	int nb;
-	char c;
-	char str[100];
 
-	ft_scanf("%d %c %s", &nb, &c, str);
-	printf("%d %c %s",nb, c, str);
+
+	// char b[20] = "hello word";
+	int g = 5;
+	// int s = 8;
+	ft_scanf("   dd %d", &g);
+	printf("%d\n", g);
+// 	scanf("%d", &s);
+// 	printf("%d\n", s);
 }

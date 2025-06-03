@@ -1,21 +1,20 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 void help(int n,int c,int *b)
 {
     if(c==n)
     {
-        for(int i=0;i<n;i++)
-            fprintf(stderr,"%d%c",b[i],i< n-1 ?' ':'\n');
-        return ;
+        for(int i=0;i< n;i++)
+        {
+            printf("%d%c",b[i],i<n-1?"":"\n");
+        }
+        return;
     }
     for(int r=0;r<n;r++)
     {
-        int safe=1;
+        int safe =1;
         for(int i=0;i<c;i++)
         {
-            int d=c-i;
-            if(b[i]==r||b[i]==r-d||b[i]==r+d)
+            int d= c-i;
+            if(b[i]==r ||b[i]==r-d||b[i]==r+d)
             {
                 safe=0;
                 break;
@@ -28,7 +27,8 @@ void help(int n,int c,int *b)
         }
     }
 }
-void help2(int n)
+
+help1(int n)
 {
     int b[n];
     help(n,0,b);
@@ -36,11 +36,10 @@ void help2(int n)
 
 int main(int arc,char **arv)
 {
-    if(arc!=2|| atoi(arv[1])<=0)
+    if(arc!=2 || atoi(arv[1])<0)
     {
         write(1,"\n",1);
         return 1;
     }
-    help2(atoi(arv[1]));
-    return 0;
+    help1(atoi(arv[1]));
 }

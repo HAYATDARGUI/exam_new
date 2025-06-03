@@ -6,68 +6,67 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:05:40 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/05/16 12:56:03 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/05/28 09:55:52 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 40
-#endif
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
+int ft_strncmp(char *s1,char *s2,int n)
+{
+    int i=0;
+    while(i<n&& (s1[i] ||s2[i]))
+    {
+        if(s1!=s2)
+            return (s1[i]-s2[i]);
+        i++;
+    }
+    return 0;
+}
 int main(int arc,char **arv)
 {
-    if(arc !=2)
-    {
-        return 1;
-    }
     char buffer[BUFFER_SIZE];
-    char *tmp=NULL;
-    char *str=NULL;
+    char *str;
+    char *tmp;
     int r;
     int lenght=0;
-    int i;
+    int i=0;
+    if (arc != 2)
+		return (1);
     while((r=read(0,buffer,BUFFER_SIZE))>0)
     {
         str=realloc(tmp,lenght+r+1);
         if(!str)
         {
             free(tmp);
-            return 1;
+            return 0;
         }
         tmp=str;
         i=0;
-        while(i< r)
+        if(i< r)
         {
             tmp[lenght+i]=buffer[i];
             i++;
         }
-        lenght += r;
+        lenght+=r;
         tmp[lenght]='\0';
     }
-    if(!tmp)
-        return 0;
-    int len =strlen(arv[1]);
-    int j;
     i=0;
+    int j;
+    int len=strlen(arv[1]);
     while(tmp[i])
     {
-        if(strncmp(tmp+i,arv[1],len)==0)
+        if(ft_strncmp(tmp+i,arv[1],len)==0)
         {
             j=0;
-            while(j < len)
+            while(j<len)
             {
                 write(1,"*",1);
                 j++;
             }
-             i += len;
+            i=+len;
         }
         else
-        {
             write(1,&tmp[i++],1);
-        }
     }
+    tmp[i]='\0';
     free(tmp);
-    return 0;
 }

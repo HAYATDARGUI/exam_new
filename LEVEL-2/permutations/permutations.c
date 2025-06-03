@@ -6,7 +6,7 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:12:17 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/04/10 17:47:24 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:01:52 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void help1(char *str, int len)
         for(int j=0; j< len -i -1;j++)
         {
             if(str[j]>str[j+1])
-            {
                 ft_swap(&str[j], &str[j+1]);
-            }
         }
         
     }
