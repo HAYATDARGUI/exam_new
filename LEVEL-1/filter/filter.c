@@ -6,9 +6,14 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:05:40 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/05/28 09:55:52 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:16:31 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
 
 int ft_strncmp(char *s1,char *s2,int n)
 {

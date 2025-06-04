@@ -6,7 +6,7 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:12:44 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/06/03 20:48:58 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:25:22 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int main(int arc,char **arv)
         tabnumbers[i]=atoi(arv[i+2]);
     }
     int *tabfinal=malloc(sizeof(int)*indextab);
-    // printf("%d",*tabfinal);
     if(!tabfinal)
     {
         exit(1);

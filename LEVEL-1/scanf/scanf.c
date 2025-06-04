@@ -6,7 +6,7 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:06:06 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/06/02 14:11:38 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:19:13 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int scan_int(FILE *f, va_list ap)
             {
                 ungetc(getnext, f);
                 ungetc(get, f);
+                return -1;
             }
-            return -1;
         }
         get = getnext;
     }
@@ -76,9 +76,8 @@ int scan_int(FILE *f, va_list ap)
         r= r*10+(get - '0');
         get= fgetc(f);
     }
+    ungetc(get,f);
     *arg=r*s;
-    if(get != EOF)
-        ungetc(get,f);
     return 1;
 }
 
@@ -95,8 +94,7 @@ int scan_string(FILE *f, va_list ap)
         get = fgetc(f);
     }
     str[i] = '\0';
-    if(get != EOF)
-        ungetc(get,f);
+    ungetc(get,f);
     return (1);
 }
 
@@ -127,6 +125,8 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 {
     int nconv = 0;
 
+    //hayed hadi testcas ft_scanf("",&a,b,&c);
+    
     // int c = fgetc(f);
     // if (c == EOF)
     //     return EOF;
@@ -153,7 +153,7 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
     }
     if (ferror(f))
         return EOF;
-    if(nconv==0 && feof(f))
+    if(nconv==0 && feof(f))//hadi zida test cas ctl+D
         return -1;
     return nconv;
 }

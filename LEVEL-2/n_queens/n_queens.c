@@ -6,7 +6,7 @@
 /*   By: hdargui <hdargui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:11:59 by mlaffita          #+#    #+#             */
-/*   Updated: 2025/05/20 18:59:53 by hdargui          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:20:00 by hdargui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	main(int arc, char **arv)
 {
 	if (arc != 2 || atoi(arv[1]) <= 0)
 	{
-		write(1, ":'(\n", 4);
 		return (1);
 	}
 	help2(atoi(arv[1]));
